@@ -31,7 +31,7 @@ struct clientData {
 	}
 
 	clientData(sockaddr_in& Addr, string name, string pwd, string num, thread* thr)
-		: clientAddr{ Addr }, username{ name }, password{ pwd }, serialNum{ num }, corrThread{thr}{}
+		: clientAddr{ Addr }, username{ name }, password{ pwd }, serialNum{ num }, corrThread{ thr }{}
 };
 
 // 更新队列的元组
@@ -54,3 +54,4 @@ public:
 
 
 #endif // !SERVER_H
+

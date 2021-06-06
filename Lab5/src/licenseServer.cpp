@@ -1,4 +1,5 @@
 #include "server.h"
+#pragma warning(disable : 4996)
 using namespace std;
 
 Server myServer;

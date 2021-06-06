@@ -7,7 +7,7 @@ Server::Server() {
 
 void Server::init() {
 	int iRet;
-	int port = 3943;
+	int port = 8307;
 	string serverIP = "192.168.1.104";
 	WSADATA data;
 	WORD ver = MAKEWORD(2, 1);
@@ -32,7 +32,6 @@ void Server::init() {
 void Server::sendToClient(sockaddr_in* clientAddr, string msg) {
 	sendto(socket1, msg.c_str(), msg.size(), 0, (struct sockaddr*)&clientAddr, sizeof(*clientAddr));
 }
-
 
 void Server::receieveFromClient() {
 	cout << "Start receiving messages" << endl;
