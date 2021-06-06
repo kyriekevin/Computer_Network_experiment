@@ -7,7 +7,7 @@
 Server::Server() : listener{ 0 } {
 	serverAddr.sin_family = PF_INET;
 	serverAddr.sin_port = SERVER_PORT;
-	serverAddr.sin_addr.S_un.S_addr = inet_addr(SERVER_IP);
+	serverAddr.sin_addr.s_addr = inet_addr(SERVER_IP);
 }
 
 // 初始化函数，创建监听套接字，绑定端口并进行监听
@@ -16,7 +16,7 @@ void Server::init() {
 	WORD ver = MAKEWORD(2, 2); // 使用版本2.2
 	WSADATA data; // 用于初始化套接字环境
 	iRet = WSAStartup(ver, &data);
-	
+
 	// 初始化WinSock环境
 	if (iRet == SOCKET_ERROR) {
 		cerr << "WSAStartup fail " << iRet << endl;
@@ -40,7 +40,7 @@ void Server::init() {
 		exit(-1);
 	}
 	else cout << "ioctlsocket success" << endl;
-	
+
 	// 绑定网络端口
 	iRet = bind(sock, (sockaddr*)&serverAddr, sizeof sockaddr_in);
 	if (iRet == SOCKET_ERROR) {
@@ -99,9 +99,9 @@ void Server::process() {
 						int clientfd = csock;
 						// 添加用户，服务器上显示消息，并通知用户连接成功
 						socNum.emplace_back(clientfd);
-						cout << "Client " << clientfd << "successfully connected to the server" << endl;
+						cout << "Client " << clientfd << " successfully connected to the server" << endl;
 						char ID[1024];
-						cout << ID << " Hello,your ID is: " << clientfd << endl;
+						sprintf(ID, "Hello, your ID is %d", clientfd);
 
 						// 服务器产生ID并发送给客户端让客户端知道自己的ID
 						send(clientfd, ID, sizeof(ID) - 1, 0); // 扣掉最后一个结束符
@@ -113,9 +113,9 @@ void Server::process() {
 					int size = recv(socNum[i], buf, sizeof(buf) - 1, 0);
 					// 检测是否出现断线情况
 					if (size == 0 || size == -1) {
-						cerr << "Client " << socNum[i] << "is offline" << endl;
+						cerr << "Client " << socNum[i] << " is offline" << endl;
 						// 关闭已掉线的套接字，并从列表和数组中删除
-						closesocket(socNum[i]); 
+						closesocket(socNum[i]);
 						FD_CLR(socNum[i], &fds);
 						socNum.erase(socNum.begin() + i);
 						cnt--;
@@ -143,7 +143,7 @@ void Server::process() {
 
 						// 将消息发送给发来消息的客户端
 						char client[1024];
-						cout << client << " client " << socNum[i] << endl;
+						sprintf(client, " Client %d", socNum[i]);
 						strcat(client, str.c_str());
 						send(socNum[i], client, sizeof(client) - 1, 0);
 					}
@@ -166,4 +166,11 @@ vector<string> Server::split(char* str) {
 	}
 
 	return item;
+}
+
+int main() {
+	Server server;
+	server.process();
+
+	return 0;
 }
