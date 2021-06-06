@@ -19,7 +19,7 @@ int main() {
 	string username, password, serialNum;
 	cout << "Please enter in the following format : [User Name] [Password] [Serial Number]" << endl;
 	cin >> username >> password >> serialNum;
-	while(!login(username, password, serialNum)) {
+	while (!login(username, password, serialNum)) {
 		cerr << "Logon failure" << endl;
 		cout << "Please enter in the following format : [User Name] [Password] [Serial Number]" << endl;
 		cin >> username >> password >> serialNum;
