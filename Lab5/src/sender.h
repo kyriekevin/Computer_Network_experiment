@@ -12,7 +12,7 @@
 using namespace std;
 
 #define SERVER_IP "192.168.1.104"  // 默认服务器端IP地址
-#define SERVER_PORT 3943 // 服务器端口号
+#define SERVER_PORT 8307 // 服务器端口号
 
 class Client {
 private:

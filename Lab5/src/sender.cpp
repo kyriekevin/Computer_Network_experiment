@@ -8,9 +8,9 @@ bool status = false; // false表示服务器没有崩溃，true表示服务器崩溃
 
 // 设置客户端信息
 Client::Client() : user{ 0 }, writing{ 0 } {
-	serverAddr.sin_family = AF_INET; // ipv4
-	serverAddr.sin_port = htons(SERVER_PORT); // host to net  unsigned short 服务器端口号
-	serverAddr.sin_addr.S_un.S_addr = inet_addr(SERVER_IP); // 服务器地址
+	serverAddr.sin_family = PF_INET; // ipv4
+	serverAddr.sin_port = SERVER_PORT; // host to net  unsigned short 服务器端口号
+	serverAddr.sin_addr.s_addr = inet_addr(SERVER_IP); // 服务器地址
 }
 
 // 进行初始化，返回0表示初始化成功，返回-1表示初始化失败，需要尝试连接服务器
@@ -42,7 +42,7 @@ int Client::init() {
 		return -1;
 	}
 
-	cout << "connect IP: " << SERVER_IP << "Port: " << SERVER_PORT << "success" << endl;
+	cout << "connect IP: " << SERVER_IP << " Port: " << SERVER_PORT << " success" << endl;
 	return 0;
 }
 
